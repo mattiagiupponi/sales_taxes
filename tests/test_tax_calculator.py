@@ -174,7 +174,7 @@ class TestTaxCalculator(unittest.TestCase):
         actual = self.calculator._calculate_total(self.single_normal_product_multiple_quantity)
         self.assertEqual(expected, actual)
 
-    def test_calculate_tax(self):
+    def test_calculate_total_imported_product(self):
         expected = 10.00
         actual = self.calculator._calculate_total(self.single_imported_product)
         self.assertEqual(expected, actual)
