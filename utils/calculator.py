@@ -6,6 +6,33 @@ from decimal import Decimal, ROUND_HALF_UP
 
 
 class Calculator:
+    """
+    Calculator (no init required)
+
+    # Functions available:
+    Given a list of dictionary, will return a string of detail information about the products
+     - multiple_product(list_of_product):
+      - Input -> List of dictionary
+       - mandatory keys price, quantity, category, product_name
+      - Output -> List of string with quantity, price and total price + all summary information
+
+    Given a single product, will return a named_tuple with total price + tax fee
+     - single_product(product):
+      - Input -> Dict: Dictionary
+      - Output -> Named tuple: total product price + tax_fee
+      - Raise an Exception if some of mandatory params are missing
+
+    Calculate the standard tax value if the product is not one of the excluded category
+     - add_standard_tax(product)
+      - Input -> Dict: product
+      - Output -> Float: The value of the tax calculated
+
+    Calculate the import tax value if the product is not one of the excluded category
+     - add_import_tax(product)
+      - Input -> Dict: product
+      - Output -> Float: The value of the tax calculated
+    """
+
     def __init__(self):
         self.product_info = namedtuple("Product", ["tax", "total"])
         self.normal_tax = 0.0
@@ -41,10 +68,6 @@ class Calculator:
             )
         raise Exception("Mandatory param/s is/are missing")
 
-    def _missing_key(self, input_product):
-        mandatory_params = ["price", "quantity", "category", "product_name"]
-        return any([True for param in mandatory_params if param not in input_product.keys()])
-
     def add_standard_tax(self, product):
         for category in product['category']:
             if category in NO_TAX_PRODUCT_CATEGORY:
@@ -62,5 +85,9 @@ class Calculator:
     def _calculate_tax(self, product, tax_value):
         return (self._calculate_total(product) * tax_value) / 100
 
+    def _missing_key(self, input_product):
+        mandatory_params = ["price", "quantity", "category", "product_name"]
+        return any([True for param in mandatory_params if param not in input_product.keys()])
+    
     def _calculate_total(self, product):
         return product["price"] * product["quantity"]
