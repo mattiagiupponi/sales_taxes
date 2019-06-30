@@ -52,8 +52,17 @@ input_3 = [{
 }]
 
 if __name__ == "__main__":
+    print("Input 1:")
+    print('\n'.join(["{} {}: {}".format(p['quantity'], p['product_name'], p['price']) for p in input_1]))
+    print("Output desired:")
     print('\n'.join(Calculator().multiple_product(input_1)))
     print('\n')
+    print("Input 2:")
+    print('\n'.join(["{} {}: {}".format(p['quantity'], p['product_name'], p['price']) for p in input_2]))
+    print("Output desired:")
     print('\n'.join(Calculator().multiple_product(input_2)))
     print('\n')
+    print("Input 3:")
+    print('\n'.join(["{} {}: {}".format(p['quantity'], p['product_name'], p['price']) for p in input_3]))
+    print("Output desired:")
     print('\n'.join(Calculator().multiple_product(input_3)))
