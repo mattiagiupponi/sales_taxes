@@ -14,7 +14,7 @@ class Calculator:
         self.total_price = 0.0
         self.total_tax = 0.0
 
-    def multiple_product(self, list_of_product: list):
+    def multiple_product(self, list_of_product):
         output = []
         for product in list_of_product:
             receipt = product
@@ -26,7 +26,7 @@ class Calculator:
         output.append("Total: {}".format(self.total_price))
         return output
 
-    def single_product(self, product: dict):
+    def single_product(self, product):
         if not self._missing_key(product):
             self.normal_tax = self.add_standard_tax(product)
             self.imported_tax = self.add_import_tax(product)
@@ -41,17 +41,17 @@ class Calculator:
             )
         raise Exception("Mandatory param/s is/are missing")
 
-    def _missing_key(self, input_product: dict):
+    def _missing_key(self, input_product):
         mandatory_params = ["price", "quantity", "category", "product_name"]
         return any([True for param in mandatory_params if param not in input_product.keys()])
 
-    def add_standard_tax(self, product: dict):
+    def add_standard_tax(self, product):
         for category in product['category']:
             if category in NO_TAX_PRODUCT_CATEGORY:
                 return 0
         return self._calculate_tax(product, STANDARD_TAX_IN_PERCENTAGE)
 
-    def add_import_tax(self, product: dict):
+    def add_import_tax(self, product):
         if "imported" in product['category']:
             # imported as value should be used as a environment variable or substituted
             # when deployed with an orchestrator such as Marathon or Kubernetes, for this exercise
@@ -59,8 +59,8 @@ class Calculator:
             return self._calculate_tax(product, IMPORTED_PRODUCT_TAX_IN_PERCENTAGE)
         return 0
 
-    def _calculate_tax(self, product: dict, tax_value: str):
+    def _calculate_tax(self, product, tax_value):
         return (self._calculate_total(product) * tax_value) / 100
 
-    def _calculate_total(self, product: dict):
+    def _calculate_total(self, product):
         return product["price"] * product["quantity"]
